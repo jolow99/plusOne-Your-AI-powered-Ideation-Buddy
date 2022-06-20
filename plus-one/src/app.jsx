@@ -27,32 +27,63 @@ async function addShape() {
 }
 
 var stickyNotes;
+var clusters;
 
 async function confirmSelection() {
   let selectedItems = await miro.board.getSelection()
   stickyNotes = selectedItems.filter(item => item.type === 'sticky_note')
+  console.log(stickyNotes)
 }
 
-async function addSelection() {
-  for (const stickyNote of stickyNotes) {
-    await miro.board.createShape({
-      content: stickyNote.content,
-      x: stickyNote.x,
-      y: stickyNote.y,
-      width: stickyNote.width,
-      height: stickyNote.height
-    }) 
-  }
-}
-
-async function cluster() {
+async function processSelection() {
   // loop through stickyNote of stickyNotes and add stickyNote.content to a list
   let stickyNoteList = []
   for (const stickyNote of stickyNotes) {
     stickyNoteList.push(stickyNote.content)
     console.log(stickyNoteList)
   }
+
+  // Randomly group stickynotes into clusters 
+
+  // Generate a list of random integers which add up to n
+  let n = stickyNoteList.length
+  let clusterLengths = []
+  let cur = n
+  while (cur > 0) {
+    clusterLengths.push(Math.floor(Math.random() * cur) + 1)
+    cur -= clusterLengths[clusterLengths.length - 1]
+  }
+
+  // Create clusters
+  clusters = []
+  for (const clusterLength of clusterLengths) {
+    clusters.push(stickyNoteList.splice(0, clusterLength))
+  }
+  console.log(clusters)
 }
+
+
+async function createClusters() {
+  for (const cluster of clusters) {
+    let cluster_length = cluster.length.toString()
+    await miro.board.createText({
+      content: "Cluster" + cluster_length,
+      x: Math.floor(Math.random() * 1000),
+      y: Math.floor(Math.random() * 1000),
+      width: 1000,
+      height: 1000,
+    })
+    for (const note of cluster) {
+      await miro.board.createStickyNote({
+        content: note,
+        x: Math.floor(Math.random() * 1000),
+        y: Math.floor(Math.random() * 1000),
+        width: 1000,
+      })}
+  }
+  console.log(clusters)
+}
+
 
 function App() {
   React.useEffect(() => {
@@ -62,25 +93,23 @@ function App() {
   return (
     <div className="grid wrapper">
       <div className="cs1 ce12">
-        {/* <img src="/src/assets/congratulations.png" alt="" /> */}
-        <h1>Welcome to PlusOne</h1>
-      <input></input>
-      </div>
-      <div className="cs1 ce12">
+        
         <button
           className="button button-primary"
-          onClick = {addSticky}
-        >Say Hello World
+          onClick = {confirmSelection}
+        >Confirm Selection
         </button>
+
         <button
           className="button button-secondary"
-          onClick={confirmSelection}
-        >Select Items
+          onClick={processSelection}
+        >Process Selection
         </button>
+
         <button
           className="button button-primary"
-          onClick={cluster}
-        >Begin Clustering
+          onClick={createClusters}
+        >Create Clusters
         </button>
           
       </div>
