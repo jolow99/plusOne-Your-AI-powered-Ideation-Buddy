@@ -1,14 +1,6 @@
 import * as React from 'react';
 import ReactDOM from 'react-dom';
 
-async function addSticky() {
-  const stickyNote = await miro.board.createStickyNote({
-    content: 'Hello, World!',
-  });
-
-  await miro.board.viewport.zoomTo(stickyNote);
-}
-
 async function addShape() {
   const shape = await miro.board.createShape({
     content: '<p>This is a very yellow star shape.</p>',
@@ -28,12 +20,6 @@ async function addShape() {
 
 var stickyNotes;
 var clusters;
-
-async function confirmSelection() {
-  let selectedItems = await miro.board.getSelection()
-  stickyNotes = selectedItems.filter(item => item.type === 'sticky_note')
-  console.log(stickyNotes)
-}
 
 async function processSelection() {
   // loop through stickyNote of stickyNotes and add stickyNote.content to a list
@@ -85,33 +71,113 @@ async function createClusters() {
 }
 
 
+
 function App() {
-  React.useEffect(() => {
-    console.log("Use effect ran")
-  }, []);
+  const axios = require('axios').default;
+  const API_URL = "https://plus-one-api.herokuapp.com/predict"
+  const[stickies, setStickies] = React.useState([])
+  const[output, setOutput] = React.useState()
+  var count = stickies.length
+
+  async function updateSelection() {
+    let selectedItems = await miro.board.getSelection()
+    setStickies(selectedItems.filter(item => item.type === 'sticky_note'))
+    count = stickies.length
+  }
+
+
+  async function processSelection() {
+    let stickyNoteList = []
+    for (const stickyNote of stickies) {
+      let note = stickyNote.content.replace(/<[^>]*>/g, '')
+      stickyNoteList.push(note)
+    }
+    console.log(stickyNoteList)
+
+    axios.post(API_URL, {
+      inputs: stickyNoteList,
+    })
+    .then(function (response) {
+      console.log(response)
+      setOutput(response.data)
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+    // Simple POST request with a JSON body using fetch
+    // const requestOptions = {
+    //     mode: 'no-cors',  
+    //     method: 'POST',
+    //     headers: { 'Content-Type': 'application/json' },
+    //     body: JSON.stringify({ inputs: stickyNoteList })
+    // };
+    // fetch(API_URL, requestOptions)
+    //     .then(response => response.json())
+    //     .then(data => setOutput(data));
+
+    // console.log(response)
+    // console.log(data)
+    // console.log(output)
+
+
+    // // Send a post request to API_URL with the data
+    // const response = await fetch(API_URL, {
+    //   mode: 'no-cors',
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   },
+    //   body: {"inputs": stickyNoteList}
+    // })
+    // const output = await response.json()
+    // console.log(output)
+
+
+    let clusters = output["clusters"]
+    let labels = output["labels"]
+
+    // loop through count of clusters and labels
+    for (let i = 0; i < clusters.length; i++) {
+      let cluster = clusters[i]
+      let label = labels[i]
+      // create a text object with the label
+      await miro.board.createText({
+        content: label,
+        x: Math.floor(Math.random() * 1000),
+        y: Math.floor(Math.random() * 1000),
+        width: 1000,
+        height: 1000,
+      })
+      // loop through cluster and create sticky notes
+      for (const note of cluster) {
+        await miro.board.createStickyNote({
+          content: note,
+          x: Math.floor(Math.random() * 1000),
+          y: Math.floor(Math.random() * 1000),
+          width: 1000,
+        })
+      }
+    }
+  }
 
   return (
     <div className="grid wrapper">
       <div className="cs1 ce12">
-        
-        <button
-          className="button button-primary"
-          onClick = {confirmSelection}
-        >Confirm Selection
-        </button>
+        <h1>You selected {count} items</h1>
 
         <button
           className="button button-secondary"
-          onClick={processSelection}
-        >Process Selection
+          onClick = {updateSelection}
+        >Update Selection
         </button>
 
         <button
           className="button button-primary"
-          onClick={createClusters}
-        >Create Clusters
+          onClick={processSelection}
+        >Generate
         </button>
-          
+
       </div>
     </div>
   );
