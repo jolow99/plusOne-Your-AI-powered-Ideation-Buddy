@@ -2,11 +2,39 @@ import * as React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 
-
 function App() {
   const API_URL = "https://plus-one-api.herokuapp.com/predict"
   let [count, setCount] = React.useState()
-  let [output, setOutput] = React.useState({})
+
+  async function createStickies(clusters, labels) {
+    // loop through count of clusters and labels
+    let rel_x = 0
+    let rel_y = 0
+    for (let i = 0; i < clusters.length; i++) {
+      let cluster = clusters[i]
+      let label = labels[i]
+      rel_x = 1000 * i
+      rel_y = 1000 * i
+      // create a text object with the label
+      await miro.board.createText({
+        content: label,
+        x: rel_x,
+        y: rel_y,
+        width: 1000,
+        height: 1000,
+      })
+      // loop through cluster and create sticky notes
+      for (const note of cluster) {
+        await miro.board.createStickyNote({
+          content: note,
+          x: rel_x,
+          y: rel_y,
+          width: 1000,
+        })
+      }
+    }
+    console.log("Created stickies!")
+  }
 
   async function updateCount() {
     let selectedItems = await miro.board.getSelection()
@@ -22,46 +50,23 @@ function App() {
       let note = stickyNote.content.replace(/<[^>]*>/g, '')
       stickyNoteList.push(note)
     }
-    console.log(stickyNoteList)
+    console.log("raw input data:" + stickyNoteList)
 
     let data = { inputs: stickyNoteList }
-    let headers = {
-      mode: 'no-cors',
-    }
-    await axios.post(API_URL, data, headers)
+    console.log("data:" + data)
+    await axios.post(API_URL, data)
     .then(function (response) {
+      console.log("raw response")
       console.log(response)
-      setOutput(response.data)
+      let clusters = response.data.clusters
+      let labels = response.data.labels
+      console.log("clusters:" + clusters)
+      console.log("labels:" + labels)
+      createStickies(clusters, labels)
     })
     .catch(function (error) {
       console.log(error);
     });
-
-    let clusters = output["clusters"]
-    let labels = output["labels"]
-
-    // loop through count of clusters and labels
-    for (let i = 0; i < clusters.length; i++) {
-      let cluster = clusters[i]
-      let label = labels[i]
-      // create a text object with the label
-      await miro.board.createText({
-        content: label,
-        x: Math.floor(Math.random() * 1000),
-        y: Math.floor(Math.random() * 1000),
-        width: 1000,
-        height: 1000,
-      })
-      // loop through cluster and create sticky notes
-      for (const note of cluster) {
-        await miro.board.createStickyNote({
-          content: note,
-          x: Math.floor(Math.random() * 1000),
-          y: Math.floor(Math.random() * 1000),
-          width: 1000,
-        })
-      }
-    }
   }
 
   setInterval(updateCount, 1000)
