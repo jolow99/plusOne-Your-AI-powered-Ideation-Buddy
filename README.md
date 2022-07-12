@@ -10,3 +10,21 @@ In order to overcome this, workshop facilitators ‘manage the mess’ through c
 
 ## Solution
 We are building an interface which integrates easily with digital whiteboarding tools. Using our tool, digital post-its can be automatically sorted into categories, with appropriate labels which summarise the content of the post-its within that category. Not only does this make it easy for users to manage the many different ideas, it also enables them to synthesise information through informative text labels. 
+
+## How To Run on Local
+Step 1: `git clone https://github.com/jolow99/plusOne-Your-AI-powered-Ideation-Buddy.git`
+
+### Frontend
+Step 2: `cd plus-one`
+
+Step 3: `npm start`
+
+### Backend
+Step 4: `cd ../plus-one-backend`
+
+Step 5: `flask run`
+
+### Misc.
+Step 6: Set up a developer Miro account and point the URL for your Miro plugin app to your frontend server
+
+Step 7: Ensure the backend flask server is pointing to your backend server
