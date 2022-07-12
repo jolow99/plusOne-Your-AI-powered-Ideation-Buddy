@@ -8,30 +8,38 @@ function App() {
 
   async function createStickies(clusters, labels) {
     // loop through count of clusters and labels
-    let rel_x = 0
-    let rel_y = 0
     for (let i = 0; i < clusters.length; i++) {
       let cluster = clusters[i]
       let label = labels[i]
-      rel_x = 1000 * i
-      rel_y = 1000 * i
-      // create a text object with the label
-      await miro.board.createText({
-        content: label,
-        x: rel_x,
-        y: rel_y,
-        width: 1000,
-        height: 1000,
+      let rel_x = 0
+      let rel_y = 0
+      let frame = await miro.board.createFrame({
+        title: label,
+        width: 8000,
+        height: 4500,
       })
-      // loop through cluster and create sticky notes
-      for (const note of cluster) {
-        await miro.board.createStickyNote({
+      console.log("creating frame" + i)
+      // loop through index of cluster and create sticky notes
+      for (let j = 0; j < cluster.length; j++) {
+        let note = cluster[j]
+        if (j%5 == 0) {
+          rel_x = 0
+          rel_y += 600
+        } else {
+          rel_x += 600
+        }
+        const sticky = await miro.board.createStickyNote({
           content: note,
           x: rel_x,
           y: rel_y,
-          width: 1000,
+          shape: 'square',
+          width: 500
         })
+        await frame.add(sticky)
       }
+      frame.x = 10000*i
+      frame.y = 0
+      await frame.sync()
     }
     console.log("Created stickies!")
   }
