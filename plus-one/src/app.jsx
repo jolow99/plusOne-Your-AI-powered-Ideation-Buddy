@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import axios from 'axios';
 
 function App() {
-  const API_URL = "https://plus-one-api.herokuapp.com/predict"
+  const API_URL = "https://plus-one-api-d6djkekpna-as.a.run.app/predict"
   let [count, setCount] = React.useState()
 
   async function createStickies(clusters, labels) {
@@ -62,7 +62,7 @@ function App() {
 
     let data = { inputs: stickyNoteList }
     console.log("data:" + data)
-    await axios.post(API_URL, data)
+    await axios.get(API_URL + "?inputs=" + JSON.stringify(stickyNoteList))
     .then(function (response) {
       console.log("raw response")
       console.log(response)
