@@ -1,13 +1,17 @@
 import * as React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
+import CircularProgress from '@mui/material/CircularProgress';
 
 function App() {
   const API_URL = "https://plus-one-api-d6djkekpna-as.a.run.app/predict"
   let [count, setCount] = React.useState()
+  let [loadingAPI, setLoadingAPI] = React.useState(false)
+  let [loadingResults, setLoadingResults] = React.useState(false)
 
   async function createStickies(clusters, labels) {
     // loop through count of clusters and labels
+    setLoadingResults(true)
     for (let i = 0; i < clusters.length; i++) {
       let cluster = clusters[i]
       let label = labels[i]
@@ -42,6 +46,7 @@ function App() {
       await frame.sync()
     }
     console.log("Created stickies!")
+    setLoadingResults(false)
   }
 
   async function updateCount() {
@@ -51,6 +56,7 @@ function App() {
   }
 
   async function generate() {
+    setLoadingAPI(true)
     let selectedItems = await miro.board.getSelection()
     let stickies = selectedItems.filter(item => item.type === 'sticky_note')
     let stickyNoteList = []
@@ -70,6 +76,7 @@ function App() {
       let labels = response.data.labels
       console.log("clusters:" + clusters)
       console.log("labels:" + labels)
+      setLoadingAPI(false)
       createStickies(clusters, labels)
     })
     .catch(function (error) {
@@ -83,13 +90,22 @@ function App() {
     <div className="grid wrapper">
       <div className="cs1 ce12">
         <h1>You selected {count} items</h1>
-
-        <button
-          className="button button-primary"
-          onClick={generate}
-        >Generate
-        </button>
-
+        { loadingAPI ? 
+          <div>
+            <div className='loading'>
+            <CircularProgress/>
+            </div>
+            <i>Clustering and Summarising Data...</i>
+          </div>
+          : loadingResults ? 
+          <div>
+            <div className='loading'>
+            <CircularProgress/>
+            </div>
+            <i>Writing Results to Miro Board...</i>
+          </div>
+          : <button className="button button-primary" onClick={generate}>Generate</button> 
+        }
         <h2><b>Instructions</b></h2>
         
         <h3><b>Select Post-Its</b></h3>
