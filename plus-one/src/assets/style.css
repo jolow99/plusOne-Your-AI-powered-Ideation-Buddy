@@ -45,7 +45,18 @@ img {
   height: 100%;
 }
 
-.light {
-  font-weight: 200;
+.intro {
+  margin-top: 0;
+  padding-top: 0;
 }
 
+.light {
+  font-weight: 200;
+  margin-top: 0;
+  padding-top: 0;
+}
+
+.highlight {
+  color: var(--indigo800);
+  text-decoration: underline;
+}

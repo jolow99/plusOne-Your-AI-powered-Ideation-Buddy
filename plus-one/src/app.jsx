@@ -137,7 +137,7 @@ function App() {
   return (
     <div className="grid wrapper">
       <div className="cs1 ce12">
-        <div>
+        <div className='intro'>
           <h1 className='light'>Welcome to plusOne, your AI-powered categorisation buddy!</h1>
         </div>
         <div>
