@@ -138,7 +138,7 @@ function App() {
     <div className="grid wrapper">
       <div className="cs1 ce12">
         <div className='intro'>
-          <h1 className='light'>Welcome to plusOne, your AI-powered categorisation buddy!</h1>
+          <h2 className='light'>Welcome to plusOne, your AI-powered categorisation buddy!</h2>
         </div>
         <div>
           <h1>You selected <span className='highlight'>{count}</span> items</h1>
