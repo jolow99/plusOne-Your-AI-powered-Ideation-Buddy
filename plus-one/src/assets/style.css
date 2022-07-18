@@ -44,3 +44,8 @@ img {
   align-items: center;
   height: 100%;
 }
+
+.light {
+  font-weight: 200;
+}
+

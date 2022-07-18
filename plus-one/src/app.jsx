@@ -73,7 +73,7 @@ function App() {
         })
         await frame.add(sticky)
       }
-      if (i%5 == 0) {
+      if (i%2 == 0) {
         if (i != 0) {
           frame_x = 0
           frame_y += 5000
@@ -81,7 +81,7 @@ function App() {
         }
         console.log("Not moving frame")
       } else {
-        frame_x += 10000
+        frame_x += 8500
         console.log("Moving frame right by 10000")
       }
       frame.x = frame_x
@@ -137,30 +137,43 @@ function App() {
   return (
     <div className="grid wrapper">
       <div className="cs1 ce12">
-        <h1>You selected {count} items</h1>
-        { loadingAPI ? 
-          <div>
-            <div className='loading'>
-            <CircularProgress/>
+        <div>
+          <h1 className='light'>Welcome to plusOne, your AI-powered categorisation buddy!</h1>
+        </div>
+        <div>
+          <h1>You selected <span className='highlight'>{count}</span> items</h1>
+          { loadingAPI ? 
+            <div>
+              <div className='loading'>
+              <CircularProgress/>
+              </div>
+              <i>Clustering and Summarising Data...</i>
             </div>
-            <i>Clustering and Summarising Data...</i>
-          </div>
-          : loadingResults ? 
-          <div>
-            <div className='loading'>
-            <CircularProgress/>
+            : loadingResults ? 
+            <div>
+              <div className='loading'>
+              <CircularProgress/>
+              </div>
+              <i>Writing Results to Miro Board...</i>
             </div>
-            <i>Writing Results to Miro Board...</i>
-          </div>
-          : <button className="button button-primary" onClick={generate}>Generate</button> 
-        }
-        <h2><b>Instructions</b></h2>
-        
-        <h3><b>Select Post-Its</b></h3>
-        <p>Highlight the post-its on the Miro board</p>
+            : <button className="button button-primary" onClick={generate}>Generate</button> 
+          }
+        </div>
+        <div>
+          <h2><b>Instructions</b></h2>
+          <h3>1. Select Post-Its</h3>
+          <ul>
+            <li>Select post-its which you want to categorise by highlighting them</li>
+            <li>Drag-select or ctrl+click on the post-it to select it</li>
+            <li>Ctrl+click on selected post-its to de-select it</li>
+          </ul>
 
-        <h3><b>Press Generate Button</b></h3>
-        <p>Clusters will be automatically generated</p>
+          <h3>2. Press Generate Button</h3>
+            <ul>
+              <li>Categories will be automatically generated in different frames</li>
+              <li>A text summary of the post-its in each frame is included at the top</li>
+            </ul>
+        </div>
       </div>
     </div>
   );
