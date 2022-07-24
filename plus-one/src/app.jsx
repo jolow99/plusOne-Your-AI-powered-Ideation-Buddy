@@ -100,6 +100,33 @@ function App() {
     setCount(stickies.length)
   }
 
+  function groupSingleClusters(clusters, labels) {
+    // loop through clusters and group only clusters with only one element
+    let grouped_clusters = []
+    let grouped_labels = []
+    let single_clusters = []
+    let cluster;
+    let label;
+    for (let i = 0; i < clusters.length; i++) {
+      cluster = clusters[i]
+      label = labels[i]
+      if (cluster.length != 1) {
+        grouped_clusters.push(cluster)
+        grouped_labels.push(label)
+      } else {
+        single_clusters.push(cluster)
+      }
+    }
+    // if single clusters exist
+    if (single_clusters.length != 0) {
+      grouped_clusters.push(single_clusters)
+      grouped_labels.push("Others")
+      console.log(grouped_labels)
+      console.log("GROUPPPP ABOVE")
+    }
+    return grouped_clusters, grouped_labels
+  }
+
   async function generate() {
     let api_start = new Date().getTime()
     setLoadingAPI(true)
@@ -125,6 +152,11 @@ function App() {
       setLoadingAPI(false)
       let api_end = new Date().getTime()
       console.log("Time taken for API: " + (api_end - api_start) + "ms") 
+      clusters, labels = groupSingleClusters(clusters, labels)
+      console.log("clusters:")
+      console.log(clusters)
+      console.log("labels:")
+      console.log(labels)
       createStickies(clusters, labels)
     })
     .catch(function (error) {
