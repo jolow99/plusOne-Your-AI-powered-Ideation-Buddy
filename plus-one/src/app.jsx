@@ -9,7 +9,7 @@ function App() {
   let [loadingAPI, setLoadingAPI] = React.useState(false)
   let [loadingResults, setLoadingResults] = React.useState(false)
 
-  async function createStickies(clusters, labels) {
+  async function createStickies(clusters_and_labels) {
     let create_start = new Date().getTime()
     let frame_x = 0
     let frame_y = 0
@@ -22,6 +22,11 @@ function App() {
     let note;
     let sticky;
     // loop through count of clusters and labels
+    let clusters = clusters_and_labels.clusters[0]
+    let labels = clusters_and_labels.labels[0]
+    console.log("CREATING STICKIES CLUSTERS AND LABELS")
+    console.log(clusters)
+    console.log(labels)
     setLoadingResults(true)
     for (let i = 0; i < clusters.length; i++) {
       cluster = clusters[i]
@@ -102,6 +107,10 @@ function App() {
 
   function groupSingleClusters(clusters, labels) {
     // loop through clusters and group only clusters with only one element
+    let clusters_and_labels = {}
+    clusters_and_labels["clusters"] = []
+    clusters_and_labels["labels"] = []
+
     let grouped_clusters = []
     let grouped_labels = []
     let single_clusters = []
@@ -114,17 +123,18 @@ function App() {
         grouped_clusters.push(cluster)
         grouped_labels.push(label)
       } else {
-        single_clusters.push(cluster)
+        single_clusters.push(cluster[0])
       }
     }
     // if single clusters exist
+    clusters_and_labels["clusters"].push(grouped_clusters)
+    clusters_and_labels["labels"].push(grouped_labels)
     if (single_clusters.length != 0) {
-      grouped_clusters.push(single_clusters)
-      grouped_labels.push("Others")
-      console.log(grouped_labels)
-      console.log("GROUPPPP ABOVE")
+      // loop through single_clusters and push label to 
+      clusters_and_labels["clusters"][0].push(single_clusters)
+      clusters_and_labels["labels"][0].push("Others")
     }
-    return grouped_clusters, grouped_labels
+    return clusters_and_labels
   }
 
   async function generate() {
@@ -137,6 +147,7 @@ function App() {
       let note = stickyNote.content.replace(/<[^>]*>/g, '')
       stickyNoteList.push(note)
     }
+    let new_clusters_and_labels;
     console.log("raw input data:" + stickyNoteList)
 
     let data = { inputs: stickyNoteList }
@@ -152,12 +163,8 @@ function App() {
       setLoadingAPI(false)
       let api_end = new Date().getTime()
       console.log("Time taken for API: " + (api_end - api_start) + "ms") 
-      clusters, labels = groupSingleClusters(clusters, labels)
-      console.log("clusters:")
-      console.log(clusters)
-      console.log("labels:")
-      console.log(labels)
-      createStickies(clusters, labels)
+      new_clusters_and_labels = groupSingleClusters(clusters, labels)
+      createStickies(new_clusters_and_labels)
     })
     .catch(function (error) {
       console.log(error);
