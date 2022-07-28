@@ -176,10 +176,31 @@ function App() {
   return (
     <div className="grid wrapper">
       <div className="cs1 ce12">
+        
         <div className='intro'>
           <h2 className='light'>Welcome to plusOne, your AI-powered categorisation buddy!</h2>
         </div>
-        <div>
+
+        <div className='instructions'>
+          <div className={`${count > 1 ? 'hidden' : ''}`}>
+            <h3>1. Select Post-Its</h3>
+            <ul>
+              <li>Select post-its which you want to categorise by highlighting them</li>
+              <li>Drag-select or ctrl+click on the post-it to select it</li>
+              <li>Ctrl+click on selected post-its to de-select it</li>
+            </ul>
+          </div>
+
+          <div className={`${count < 2 ? 'hidden' : ''}`}>
+          <h3>2. Press Generate Button</h3>
+            <ul>
+              <li>Categories will be automatically generated in different frames</li>
+              <li>A text summary of the post-its in each frame is included at the top</li>
+            </ul>
+            </div>
+        </div>
+
+        <div className='main'>
           <h1>You selected <span className='highlight'>{count}</span> items</h1>
           { loadingAPI ? 
             <div>
@@ -195,24 +216,10 @@ function App() {
               </div>
               <i>Writing Results to Miro Board...</i>
             </div>
-            : <button className="button button-primary" onClick={generate}>Generate</button> 
+            : <button className={`button ${count > 1 ? "button-primary" : "button-secondary disabled"}`} onClick={generate}>Generate</button> 
           }
         </div>
-        <div>
-          <h2><b>Instructions</b></h2>
-          <h3>1. Select Post-Its</h3>
-          <ul>
-            <li>Select post-its which you want to categorise by highlighting them</li>
-            <li>Drag-select or ctrl+click on the post-it to select it</li>
-            <li>Ctrl+click on selected post-its to de-select it</li>
-          </ul>
-
-          <h3>2. Press Generate Button</h3>
-            <ul>
-              <li>Categories will be automatically generated in different frames</li>
-              <li>A text summary of the post-its in each frame is included at the top</li>
-            </ul>
-        </div>
+        
       </div>
     </div>
   );

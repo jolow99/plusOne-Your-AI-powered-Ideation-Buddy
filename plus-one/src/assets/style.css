@@ -60,3 +60,11 @@ img {
   color: var(--indigo800);
   text-decoration: underline;
 }
+
+.hidden {
+  display: none;
+}
+
+.disabled{
+  pointer-events: none;
+}
