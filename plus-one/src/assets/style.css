@@ -61,8 +61,11 @@ img {
   text-decoration: underline;
 }
 
- 
 .hidden {
+  display: none;
+}
+ 
+.gray {
   /* set text color to grey */
   color: 	rgb(192,192,192)
 }

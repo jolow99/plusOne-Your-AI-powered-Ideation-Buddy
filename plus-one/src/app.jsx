@@ -2,12 +2,21 @@ import * as React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 import CircularProgress from '@mui/material/CircularProgress';
+import PostToSheets from './googleAPI';
+import { useForm } from 'react-hook-form';
 
 function App() {
   const API_URL = "https://plus-one-api-d6djkekpna-as.a.run.app/predict"
   let [count, setCount] = React.useState()
   let [loadingAPI, setLoadingAPI] = React.useState(false)
   let [loadingResults, setLoadingResults] = React.useState(false)
+  let [completed, setCompleted] = React.useState(false)
+  const { register, handleSubmit, formState: { errors } } = useForm();
+  const onSubmit = data => {
+    console.log(data);
+    PostToSheets(data);
+  }
+  console.log(errors);
 
   async function createStickies(clusters_and_labels) {
     let create_start = new Date().getTime()
@@ -97,6 +106,7 @@ function App() {
     console.log("Time taken for Writing: " + (create_end - create_start) + "ms") 
     console.log("Created stickies!")
     setLoadingResults(false)
+    setCompleted(true)
   }
 
   async function updateCount() {
@@ -175,8 +185,8 @@ function App() {
 
   return (
     <div className="grid wrapper">
-      <div className="cs1 ce12">
-        
+      <div className={`cs1 ce12 ${completed ? "hidden" : ""}`}>
+
         <div className='intro'>
           <h2 className='light'>Welcome to plusOne, your AI-powered categorisation buddy!</h2>
         </div>
@@ -218,8 +228,21 @@ function App() {
             </div>
             : <button className={`button ${count > 1 ? "button-primary" : "button-secondary disabled"}`} onClick={generate}>Generate</button> 
           }
+          <button className="button button-primary" onClick = {() => {setCompleted(true)}}>Testing button to go to next page</button>
         </div>
     </div>
+
+    <div className={`cs1 ce12 ${completed ? "" : "hidden"}`}>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <input type="text" placeholder="Question 1" {...register("Qns 1", {})} />
+        <input type="text" placeholder="Question 2" {...register("Qns 2", {})} />
+        <input type="text" placeholder="Question 3" {...register("Qns 3", {})} />
+
+        <input type="submit" />
+      </form>
+      
+    </div>
+    <script src="//sheet2api.com/v1/api.js"></script>
    </div>
   );
 }
