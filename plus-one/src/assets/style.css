@@ -60,3 +60,13 @@ img {
   color: var(--indigo800);
   text-decoration: underline;
 }
+
+ 
+.hidden {
+  /* set text color to grey */
+  color: 	rgb(192,192,192)
+}
+
+.disabled{
+  pointer-events: none;
+}

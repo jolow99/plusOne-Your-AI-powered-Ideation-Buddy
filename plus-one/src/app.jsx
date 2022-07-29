@@ -9,7 +9,7 @@ function App() {
   let [loadingAPI, setLoadingAPI] = React.useState(false)
   let [loadingResults, setLoadingResults] = React.useState(false)
 
-  async function createStickies(clusters, labels) {
+  async function createStickies(clusters_and_labels) {
     let create_start = new Date().getTime()
     let frame_x = 0
     let frame_y = 0
@@ -22,6 +22,11 @@ function App() {
     let note;
     let sticky;
     // loop through count of clusters and labels
+    let clusters = clusters_and_labels.clusters[0]
+    let labels = clusters_and_labels.labels[0]
+    console.log("CREATING STICKIES CLUSTERS AND LABELS")
+    console.log(clusters)
+    console.log(labels)
     setLoadingResults(true)
     for (let i = 0; i < clusters.length; i++) {
       cluster = clusters[i]
@@ -100,6 +105,38 @@ function App() {
     setCount(stickies.length)
   }
 
+  function groupSingleClusters(clusters, labels) {
+    // loop through clusters and group only clusters with only one element
+    let clusters_and_labels = {}
+    clusters_and_labels["clusters"] = []
+    clusters_and_labels["labels"] = []
+
+    let grouped_clusters = []
+    let grouped_labels = []
+    let single_clusters = []
+    let cluster;
+    let label;
+    for (let i = 0; i < clusters.length; i++) {
+      cluster = clusters[i]
+      label = labels[i]
+      if (cluster.length != 1) {
+        grouped_clusters.push(cluster)
+        grouped_labels.push(label)
+      } else {
+        single_clusters.push(cluster[0])
+      }
+    }
+    // if single clusters exist
+    clusters_and_labels["clusters"].push(grouped_clusters)
+    clusters_and_labels["labels"].push(grouped_labels)
+    if (single_clusters.length != 0) {
+      // loop through single_clusters and push label to 
+      clusters_and_labels["clusters"][0].push(single_clusters)
+      clusters_and_labels["labels"][0].push("Others")
+    }
+    return clusters_and_labels
+  }
+
   async function generate() {
     let api_start = new Date().getTime()
     setLoadingAPI(true)
@@ -110,6 +147,7 @@ function App() {
       let note = stickyNote.content.replace(/<[^>]*>/g, '')
       stickyNoteList.push(note)
     }
+    let new_clusters_and_labels;
     console.log("raw input data:" + stickyNoteList)
 
     let data = { inputs: stickyNoteList }
@@ -125,7 +163,8 @@ function App() {
       setLoadingAPI(false)
       let api_end = new Date().getTime()
       console.log("Time taken for API: " + (api_end - api_start) + "ms") 
-      createStickies(clusters, labels)
+      new_clusters_and_labels = groupSingleClusters(clusters, labels)
+      createStickies(new_clusters_and_labels)
     })
     .catch(function (error) {
       console.log(error);
@@ -137,10 +176,31 @@ function App() {
   return (
     <div className="grid wrapper">
       <div className="cs1 ce12">
+        
         <div className='intro'>
           <h2 className='light'>Welcome to plusOne, your AI-powered categorisation buddy!</h2>
         </div>
-        <div>
+
+        <div className='instructions'>
+          <div className={`${count > 1 ? 'gray' : ''}`}>
+            <h3>1. Select Post-Its</h3>
+            <ul>
+              <li>Select post-its which you want to categorise by highlighting them</li>
+              <li>Drag-select or ctrl+click on the post-it to select it</li>
+              <li>Ctrl+click on selected post-its to de-select it</li>
+            </ul>
+          </div>
+
+          <div className={`${count < 2 ? 'gray' : ''}`}>
+          <h3>2. Press Generate Button</h3>
+            <ul>
+              <li>Categories will be automatically generated in different frames</li>
+              <li>A text summary of the post-its in each frame is included at the top</li>
+            </ul>
+            </div>
+        </div>
+
+        <div className='main'>
           <h1>You selected <span className='highlight'>{count}</span> items</h1>
           { loadingAPI ? 
             <div>
@@ -156,26 +216,11 @@ function App() {
               </div>
               <i>Writing Results to Miro Board...</i>
             </div>
-            : <button className="button button-primary" onClick={generate}>Generate</button> 
+            : <button className={`button ${count > 1 ? "button-primary" : "button-secondary disabled"}`} onClick={generate}>Generate</button> 
           }
         </div>
-        <div>
-          <h2><b>Instructions</b></h2>
-          <h3>1. Select Post-Its</h3>
-          <ul>
-            <li>Select post-its which you want to categorise by highlighting them</li>
-            <li>Drag-select or ctrl+click on the post-it to select it</li>
-            <li>Ctrl+click on selected post-its to de-select it</li>
-          </ul>
-
-          <h3>2. Press Generate Button</h3>
-            <ul>
-              <li>Categories will be automatically generated in different frames</li>
-              <li>A text summary of the post-its in each frame is included at the top</li>
-            </ul>
-        </div>
-      </div>
     </div>
+   </div>
   );
 }
 
