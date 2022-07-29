@@ -182,7 +182,7 @@ function App() {
         </div>
 
         <div className='instructions'>
-          <div className={`${count > 1 ? 'hidden' : ''}`}>
+          <div className={`${count > 1 ? 'gray' : ''}`}>
             <h3>1. Select Post-Its</h3>
             <ul>
               <li>Select post-its which you want to categorise by highlighting them</li>
@@ -191,7 +191,7 @@ function App() {
             </ul>
           </div>
 
-          <div className={`${count < 2 ? 'hidden' : ''}`}>
+          <div className={`${count < 2 ? 'gray' : ''}`}>
           <h3>2. Press Generate Button</h3>
             <ul>
               <li>Categories will be automatically generated in different frames</li>
@@ -219,9 +219,8 @@ function App() {
             : <button className={`button ${count > 1 ? "button-primary" : "button-secondary disabled"}`} onClick={generate}>Generate</button> 
           }
         </div>
-        
-      </div>
     </div>
+   </div>
   );
 }
 
