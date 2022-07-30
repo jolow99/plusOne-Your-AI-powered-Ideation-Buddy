@@ -256,11 +256,11 @@ function App() {
       <form className = 'test' onSubmit={handleSubmit(onSubmit)}>
         <div className='form-group'>
           <label className='temp-hide'>#1 cluster summary</label>
-            <input type="text" className = 'Qns-1 temp-hide' name='Qns-1' placeholder="Type your cluster summary" {...register("Qns 1", {})} />
+            <textarea type="text" className = 'Qns-1 temp-hide' name='Qns-1' placeholder="Type your cluster summary" {...register("Qns 1", {})} />
           <label className='temp-hide'>#2 cluster summary</label>
-            <input type="text" className = "Qns-2 temp-hide" name='Qns-2' placeholder="Type your cluster summary" {...register("Qns 2", {})} />
+            <textarea type="text" className = "Qns-2 temp-hide" name='Qns-2' placeholder="Type your cluster summary" {...register("Qns 2", {})} />
           <label className='temp-hide'>#3 cluster summary</label>
-            <input type="text" className = 'Qns-3 temp-hide'name='Qns-3' placeholder="Type your cluster summary" {...register("Qns 3", {})} />
+            <textarea type="text" className = 'Qns-3 temp-hide'name='Qns-3' placeholder="Type your cluster summary" {...register("Qns 3", {})} />
         
         </div>
         <div id='end' className='temp-hide'>
