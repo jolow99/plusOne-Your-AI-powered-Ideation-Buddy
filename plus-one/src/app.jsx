@@ -3,7 +3,9 @@ import ReactDOM from 'react-dom';
 import axios from 'axios';
 import CircularProgress from '@mui/material/CircularProgress';
 import PostToSheets from './googleAPI';
+
 import { useForm } from 'react-hook-form';
+// import Sheet2API from 'sheet2api-js';
 
 function App() {
   const API_URL = "https://plus-one-api-d6djkekpna-as.a.run.app/predict"
@@ -16,7 +18,7 @@ function App() {
     console.log(data);
     PostToSheets(data);
   }
-  console.log(errors);
+  // console.log(errors);
 
   async function createStickies(clusters_and_labels) {
     let create_start = new Date().getTime()
@@ -33,9 +35,9 @@ function App() {
     // loop through count of clusters and labels
     let clusters = clusters_and_labels.clusters[0]
     let labels = clusters_and_labels.labels[0]
-    console.log("CREATING STICKIES CLUSTERS AND LABELS")
-    console.log(clusters)
-    console.log(labels)
+    // console.log("CREATING STICKIES CLUSTERS AND LABELS")
+    // console.log(clusters)
+    // console.log(labels)
     setLoadingResults(true)
     for (let i = 0; i < clusters.length; i++) {
       cluster = clusters[i]
@@ -47,7 +49,7 @@ function App() {
         width: 8000,
         height: 4500,
       })
-      console.log("creating frame" + i)
+      // console.log("creating frame" + i)
       text_label = await miro.board.createText({
         content: label,
         style: {
@@ -71,12 +73,12 @@ function App() {
           if (j != 0) {
             sticky_x = 0
             sticky_y += 600
-            console.log("Moving sticky down by 600")
+            // console.log("Moving sticky down by 600")
           }
-          console.log("Not moving sticky")
+          // console.log("Not moving sticky")
         } else {
           sticky_x += 600
-          console.log("Moving sticky right by 600")
+          // console.log("Moving sticky right by 600")
         }
         sticky = await miro.board.createStickyNote({
           content: note,
@@ -91,20 +93,20 @@ function App() {
         if (i != 0) {
           frame_x = 0
           frame_y += 5000
-          console.log("Moving frame down by 5000")
+          // console.log("Moving frame down by 5000")
         }
-        console.log("Not moving frame")
+        // console.log("Not moving frame")
       } else {
         frame_x += 8500
-        console.log("Moving frame right by 10000")
+        // console.log("Moving frame right by 10000")
       }
       frame.x = frame_x
       frame.y = frame_y
       await frame.sync()
     }
     let create_end = new Date().getTime()
-    console.log("Time taken for Writing: " + (create_end - create_start) + "ms") 
-    console.log("Created stickies!")
+    // console.log("Time taken for Writing: " + (create_end - create_start) + "ms") 
+    // console.log("Created stickies!")
     setLoadingResults(false)
     setCompleted(true)
   }
@@ -148,6 +150,7 @@ function App() {
   }
 
   async function generate() {
+
     let api_start = new Date().getTime()
     setLoadingAPI(true)
     let selectedItems = await miro.board.getSelection()
@@ -158,27 +161,40 @@ function App() {
       stickyNoteList.push(note)
     }
     let new_clusters_and_labels;
-    console.log("raw input data:" + stickyNoteList)
+    // console.log("raw input data:" + stickyNoteList)
 
     let data = { inputs: stickyNoteList }
-    console.log("data:" + data)
-    await axios.get(API_URL + "?inputs=" + JSON.stringify(stickyNoteList))
-    .then(function (response) {
-      console.log("raw response")
-      console.log(response)
-      let clusters = response.data.clusters
-      let labels = response.data.labels
-      console.log("clusters:" + clusters)
-      console.log("labels:" + labels)
-      setLoadingAPI(false)
-      let api_end = new Date().getTime()
-      console.log("Time taken for API: " + (api_end - api_start) + "ms") 
-      new_clusters_and_labels = groupSingleClusters(clusters, labels)
+    // console.log("data:" + data)
+
+
+    let output = {
+      // "clusters": [["1","2","3","4","5"],["6","7","8","9","10"],["11","12","13","14","15"],["16","17","18","19","20"],["21","22","23","24","25"]],
+      // "labels": ["labels1", "labels2", "labels3", "labels4", "labels5"]
+      "clusters": [["1","2"]],
+      "labels": ["labels1"]
+    } 
+
+      new_clusters_and_labels = groupSingleClusters(output.clusters, output.labels)
       createStickies(new_clusters_and_labels)
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
+
+    // // !!! for production !!!
+    // await axios.get(API_URL + "?inputs=" + JSON.stringify(stickyNoteList))
+    // .then(function (response) {
+    //   console.log("raw response")
+    //   console.log(response)
+    //   let clusters = response.data.clusters
+    //   let labels = response.data.labels
+    //   console.log("clusters:" + clusters)
+    //   console.log("labels:" + labels)
+    //   setLoadingAPI(false)
+    //   let api_end = new Date().getTime()
+    //   console.log("Time taken for API: " + (api_end - api_start) + "ms") 
+    //   new_clusters_and_labels = groupSingleClusters(clusters, labels)
+    //   createStickies(new_clusters_and_labels)
+    // })
+    // .catch(function (error) {
+    //   console.log(error);
+    // });
   }
 
   setInterval(updateCount, 1000)
@@ -225,26 +241,52 @@ function App() {
               <CircularProgress/>
               </div>
               <i>Writing Results to Miro Board...</i>
+          
             </div>
             : <button className={`button ${count > 1 ? "button-primary" : "button-secondary disabled"}`} onClick={generate}>Generate</button> 
+            
           }
-          <button className="button button-primary" onClick = {() => {setCompleted(true)}}>Testing button to go to next page</button>
+          
+          <button className="button button-primary hidden " onClick = {() => {setCompleted(true)}}>Testing button to go to next page</button>
         </div>
     </div>
 
-    <div className={`cs1 ce12 ${completed ? "" : "hidden"}`}>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <input type="text" placeholder="Question 1" {...register("Qns 1", {})} />
-        <input type="text" placeholder="Question 2" {...register("Qns 2", {})} />
-        <input type="text" placeholder="Question 3" {...register("Qns 3", {})} />
 
-        <input type="submit" />
+    <div id= 'form' className={`cs1 ce12 ${completed ? "" : "hidden"}`}>
+      <form className = 'test' onSubmit={handleSubmit(onSubmit)}>
+        <div className='form-group'>
+          <label className='temp-hide'>#1 cluster summary</label>
+            <input type="text" className = 'Qns-1 temp-hide' name='Qns-1' placeholder="Type your cluster summary" {...register("Qns 1", {})} />
+          <label className='temp-hide'>#2 cluster summary</label>
+            <input type="text" className = "Qns-2 temp-hide" name='Qns-2' placeholder="Type your cluster summary" {...register("Qns 2", {})} />
+          <label className='temp-hide'>#3 cluster summary</label>
+            <input type="text" className = 'Qns-3 temp-hide'name='Qns-3' placeholder="Type your cluster summary" {...register("Qns 3", {})} />
+        
+        </div>
+        <div id='end' className='temp-hide'>
+          <a ><center>Thanks for submitting :D!</center></a>
+        </div>
+        <ul className='ul'>
+          <li>#1: instructions</li>
+          <li>#2: instructions</li>
+          <li>#3: instructions</li>
+        </ul>
+        
+    
+        <input  className = 'btn' type="submit" />
+        <button type='button' id='ints' className="button button-primary">Start</button>
       </form>
       
+      
     </div>
-    <script src="//sheet2api.com/v1/api.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="form.js" type="text/javascript"></script>
+    <script type="text/javascript">
+      console.log("hello")
+    </script>
    </div>
   );
 }
 
 ReactDOM.render(<App />, document.getElementById('root'));
+

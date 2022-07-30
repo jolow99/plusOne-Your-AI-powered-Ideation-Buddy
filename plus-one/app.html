@@ -3,12 +3,149 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/src/assets/style.css" />
+    <link rel="stylesheet" href="/src/assets/style.scss" />
     <script src="https://miro.com/app/static/sdk/v2/miro.js"></script>
   </head>
   <body>
     
     <div id="root"></div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript">
+  console.log('inside form')
+$(document).ready(function(){
+    $('form').find('#ints').on('click',function(){
+       $(this).siblings('.ul').toggleClass('hidden');
+       $(this).toggleClass('hidden');
+       $(this).parent().css({
+         'height' : '600px',
+         'transform' : 'translateY(10px)'
+       });
+         $(this).siblings('.form-group').css({
+           'top':'20px'
+         });
+         
+         $(this).siblings('.form-group').children('.temp-hide').toggleClass('temp-show');
+        //  $(this).siblings('.links').css({
+        //    'top':'65%'
+        //  });
+       });
+
+    $('form').find('.btn').on('click',function(){
+       $(this).siblings('.form-group').toggleClass('hidden');
+       $(this).toggleClass('temp-hide');
+       $(this).siblings('#end').toggleClass('temp-show');
+       
+       
+       //create a <a> tag and append to the form-group
+      
+
+
+    });
+   
+   
+   /*-------- focus in ---------*/
+   $('.Qns-2').on('focusin',function(){
+     $(this).siblings('.Qns-1').css({
+       'z-index'   :'1',
+       'background':'rgba(0,0,0,0.1)',
+        'color'     :'black'
+     });
+     $(this).siblings('.Qns-3').css({
+        'z-index'   :'1',
+        'background':'rgba(0,0,0,0.1)',
+        'color'     :'black'
+      });
+      $(this).css({
+       'z-index' : '2',
+       'background' : '#fff',
+       'color'     :'black',
+       
+       
+       });
+   });
+   
+   
+    $('.Qns-1').on('focusin',function(){
+     $(this).siblings('.Qns-2').css({
+       'z-index'   :'1',
+       'background':'rgba(0,0,0,0.1)',
+       'color'     :'black'
+     });
+     $(this).siblings('.Qns-3').css({
+        'z-index'   :'1',
+        'background':'rgba(0,0,0,0.1)',
+        'color'     :'black'
+      });
+     $(this).css({
+       'z-index' : '2',
+       'background' : '#fff',
+       'color'     :'black'
+      });
+   });
+
+   $('.Qns-3').on('focusin',function(){
+    $(this).siblings('.Qns-2').css({
+      'z-index'   :'1',
+      'background':'rgba(0,0,0,0.1)',
+    });
+    $(this).siblings('.Qns-1').css({
+       'z-index'   :'1',
+       'background':'rgba(0,0,0,0.1)',
+     });
+    $(this).css({
+      'z-index' : '2',
+      'background' : '#fff'
+     });
+  });
+   
+   /*----------- focus out ---------*/
+   $('.Qns-1').on('focusout',function(){
+     $(this).siblings('.Qns-2').css({
+       'z-index'   :'1',
+       'background':'rgba(0,0,0,.1)'
+     });
+     $(this).siblings('.Qns-3').css({
+        'z-index'   :'1',
+        'background':'rgba(0,0,0,.1)'
+      });
+     $(this).css({
+       'z-index' : '2',
+       'background' : '#fff'
+     });
+   });
+   
+   
+   $('.Qns-2').on('focusout',function(){
+    $(this).siblings('.Qns-1').css({
+      'z-index'   :'1',
+      'background':'rgba(0,0,0,.1)'
+    });
+    $(this).siblings('.Qns-3').css({
+       'z-index'   :'1',
+       'background':'rgba(0,0,0,.1)'
+     });
+    $(this).css({
+      'z-index' : '2',
+      'background' : '#fff'
+    });
+  });
+
+  $('.Qns-3').on('focusout',function(){
+    $(this).siblings('.Qns-2').css({
+      'z-index'   :'1',
+      'background':'rgba(0,0,0,.1)'
+    });
+    $(this).siblings('.Qns-1').css({
+       'z-index'   :'1',
+       'background':'rgba(0,0,0,.1)'
+     });
+    $(this).css({
+      'z-index' : '2',
+      'background' : '#fff'
+    });
+  });
+ })
+    </script>
     
     <script type="module" src="/src/app.jsx"></script>
   </body>
