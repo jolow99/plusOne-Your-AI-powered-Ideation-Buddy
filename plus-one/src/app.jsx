@@ -250,38 +250,25 @@ function App() {
     </div>
 
 
-    <div id= 'form' className={`cs1 ce12 ${completed ? "" : "hidden"}`}>
-      <form className = 'test' onSubmit={handleSubmit(onSubmit)}>
-        <div className='form-group'>
-          <label className='temp-hide'>#1 cluster summary</label>
-            <textarea type="text" className = 'Qns-1 temp-hide' name='Qns-1' placeholder="Type your cluster summary" {...register("Qns 1", {})} />
-          <label className='temp-hide'>#2 cluster summary</label>
-            <textarea type="text" className = "Qns-2 temp-hide" name='Qns-2' placeholder="Type your cluster summary" {...register("Qns 2", {})} />
-          <label className='temp-hide'>#3 cluster summary</label>
-            <textarea type="text" className = 'Qns-3 temp-hide'name='Qns-3' placeholder="Type your cluster summary" {...register("Qns 3", {})} />
-        
+    <div className={`cs1 ce12 ${completed ? "" : "hidden"}`}>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div >
+          <div>
+          <h1>Instructions</h1>
+          <p>Here are the instructions for how you should complete this task!</p>
+          </div>
+          <div>
+          <label>#1 cluster summary</label>
+            <textarea type="text" name='Qns-1' placeholder="Type your cluster summary" {...register("Qns 1", {})} />
+          <label>#2 cluster summary</label>
+            <textarea type="text" name='Qns-2' placeholder="Type your cluster summary" {...register("Qns 2", {})} />
+          <label>#3 cluster summary</label>
+            <textarea type="text" name='Qns-3' placeholder="Type your cluster summary" {...register("Qns 3", {})} />
+            </div>
         </div>
-        <div id='end' className='temp-hide'>
-          <a ><center>Thanks for submitting :D!</center></a>
-        </div>
-        <ul className='ul'>
-          <li>#1: instructions</li>
-          <li>#2: instructions</li>
-          <li>#3: instructions</li>
-        </ul>
-        
-    
-        <input  className = 'btn' type="submit" />
-        <button type='button' id='ints' className="button button-primary">Start</button>
+        <button className="button button-primary">Submit</button>
       </form>
-      
-      
     </div>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="form.js" type="text/javascript"></script>
-    <script type="text/javascript">
-      console.log("hello")
-    </script>
    </div>
   );
 }
