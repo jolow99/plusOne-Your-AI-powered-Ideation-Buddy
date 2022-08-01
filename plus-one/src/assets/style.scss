@@ -254,3 +254,9 @@ textarea {
     cursor: pointer;
   }
 }
+
+.scroll {
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 90vh;
+}
