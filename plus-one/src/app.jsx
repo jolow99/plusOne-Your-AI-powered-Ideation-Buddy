@@ -1,11 +1,8 @@
 import * as React from 'react';
 import ReactDOM from 'react-dom';
-import axios from 'axios';
 import CircularProgress from '@mui/material/CircularProgress';
 import PostToSheets from './googleAPI';
-
 import { useForm } from 'react-hook-form';
-// import Sheet2API from 'sheet2api-js';
 
 function App() {
   const API_URL = "https://plus-one-api-d6djkekpna-as.a.run.app/predict"
@@ -13,10 +10,12 @@ function App() {
   let [loadingAPI, setLoadingAPI] = React.useState(false)
   let [loadingResults, setLoadingResults] = React.useState(false)
   let [completed, setCompleted] = React.useState(false)
+  let [writingData, setWritingData] = React.useState(false)
   const { register, handleSubmit, formState: { errors } } = useForm();
   const onSubmit = data => {
     console.log(data);
-    PostToSheets(data);
+    setWritingData(true)
+    PostToSheets(data, setWritingData);
   }
   // console.log(errors);
 
@@ -150,7 +149,6 @@ function App() {
   }
 
   async function generate() {
-
     let api_start = new Date().getTime()
     setLoadingAPI(true)
     let selectedItems = await miro.board.getSelection()
@@ -166,35 +164,14 @@ function App() {
     let data = { inputs: stickyNoteList }
     // console.log("data:" + data)
 
-
     let output = {
       // "clusters": [["1","2","3","4","5"],["6","7","8","9","10"],["11","12","13","14","15"],["16","17","18","19","20"],["21","22","23","24","25"]],
       // "labels": ["labels1", "labels2", "labels3", "labels4", "labels5"]
       "clusters": [["1","2"]],
       "labels": ["labels1"]
     } 
-
       new_clusters_and_labels = groupSingleClusters(output.clusters, output.labels)
       createStickies(new_clusters_and_labels)
-
-    // // !!! for production !!!
-    // await axios.get(API_URL + "?inputs=" + JSON.stringify(stickyNoteList))
-    // .then(function (response) {
-    //   console.log("raw response")
-    //   console.log(response)
-    //   let clusters = response.data.clusters
-    //   let labels = response.data.labels
-    //   console.log("clusters:" + clusters)
-    //   console.log("labels:" + labels)
-    //   setLoadingAPI(false)
-    //   let api_end = new Date().getTime()
-    //   console.log("Time taken for API: " + (api_end - api_start) + "ms") 
-    //   new_clusters_and_labels = groupSingleClusters(clusters, labels)
-    //   createStickies(new_clusters_and_labels)
-    // })
-    // .catch(function (error) {
-    //   console.log(error);
-    // });
   }
 
   setInterval(updateCount, 1000)
@@ -253,20 +230,30 @@ function App() {
     <div className={`cs1 ce12 ${completed ? "" : "hidden"}`}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div >
-          <div>
-          <h1>Instructions</h1>
-          <p>Here are the instructions for how you should complete this task!</p>
+          <div className='intro'>
+            <h2 className='light'>Summarising The Results!</h2>
+            <p>Here are the instructions for how you should complete this task!</p>
           </div>
           <div>
+          <div className = 'flex'>
+            <label>What is your name?</label>
+            <textarea className = 'small'type="text" name='Name' placeholder="Enter your name" {...register("Name", {})} /> 
+          </div>
+          <div className='flex'>
           <label>#1 cluster summary</label>
-            <textarea type="text" name='Qns-1' placeholder="Type your cluster summary" {...register("Qns 1", {})} />
+          <textarea  type="text" name='Qns-1' placeholder="Type your cluster summary" {...register("Qns 1", {})} />
+          </div>
+          <div className='flex'>
           <label>#2 cluster summary</label>
             <textarea type="text" name='Qns-2' placeholder="Type your cluster summary" {...register("Qns 2", {})} />
+          </div>
+          <div className = 'flex'>
           <label>#3 cluster summary</label>
             <textarea type="text" name='Qns-3' placeholder="Type your cluster summary" {...register("Qns 3", {})} />
             </div>
+            </div>
         </div>
-        <button className="button button-primary">Submit</button>
+        {writingData ? <CircularProgress/> : <button className="button button-primary" type="submit">Submit</button>}
       </form>
     </div>
    </div>
