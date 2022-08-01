@@ -58,7 +58,7 @@ function App() {
       // loop through index of cluster and create sticky notes
       for (let j = 0; j < cluster.length; j++) {
         note = cluster[j]
-        if (j%5 == 0) {
+        if (j%6 == 0) {
           if (j != 0) {
             sticky_x = 0
             sticky_y += 600
