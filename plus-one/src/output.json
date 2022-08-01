@@ -1,0 +1,26 @@
+{
+    "clusters": [
+        [
+            "Canteen closes early",
+            "Queue too long at peak periods",
+            "Canteen gets crowded easily"
+        ],
+        [
+            "Lack of variety",
+            "Having lesser and lesser vendor",
+            "no yong tau foo"
+        ],
+        [
+            "portions are small",
+            "very few snacks? there used to be waffles but now no more",
+            "food poisoning",
+            "lack of variety of food choices",
+            "not many choices"
+        ]
+    ],
+    "labels": [
+        "The canteen gets crowded easily and closes early",
+        "There is a lack of variation among the food stalls at the hawker centre",
+        "There are not many food options available at night, and the food that is available is not very nutritious"
+    ]
+}

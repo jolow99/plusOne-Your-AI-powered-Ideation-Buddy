@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import CircularProgress from '@mui/material/CircularProgress';
 import PostToSheets from './googleAPI';
 import { useForm } from 'react-hook-form';
+import myData from './output.json';
 
 function App() {
   const API_URL = "https://plus-one-api-d6djkekpna-as.a.run.app/predict"
@@ -159,18 +160,10 @@ function App() {
       stickyNoteList.push(note)
     }
     let new_clusters_and_labels;
-    // console.log("raw input data:" + stickyNoteList)
 
     let data = { inputs: stickyNoteList }
-    // console.log("data:" + data)
 
-    let output = {
-      // "clusters": [["1","2","3","4","5"],["6","7","8","9","10"],["11","12","13","14","15"],["16","17","18","19","20"],["21","22","23","24","25"]],
-      // "labels": ["labels1", "labels2", "labels3", "labels4", "labels5"]
-      "clusters": [["1","2"]],
-      "labels": ["labels1"]
-    } 
-      new_clusters_and_labels = groupSingleClusters(output.clusters, output.labels)
+      new_clusters_and_labels = groupSingleClusters(myData.clusters, myData.labels)
       createStickies(new_clusters_and_labels)
   }
 
