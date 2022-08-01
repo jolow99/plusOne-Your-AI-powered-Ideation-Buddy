@@ -8,7 +8,7 @@ export default function PostToSheets(data, setWritingData, setSuccessMessage){
     const url = 'https://sheet2api.com/v1/97Jq2YRtTeqd/one-plus';
     
     const options = {};
-    data["Type"] = "short"
+    data["Type"] = "long"
     Sheet2API.write(url, options, data).then(function(result){
         console.log("RESULT")
         console.log(result);

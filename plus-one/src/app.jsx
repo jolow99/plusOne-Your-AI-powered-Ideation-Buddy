@@ -15,6 +15,8 @@ function App() {
   let [completed, setCompleted] = React.useState(false);
   let [writingData, setWritingData] = React.useState(false);
   let [successMessage, setSuccessMessage] = React.useState("");
+  let [startTime, setStartTime] = React.useState(0);
+
   const {
     register,
     handleSubmit,
@@ -24,6 +26,9 @@ function App() {
     console.log(data);
     setSuccessMessage("");
     setWritingData(true);
+    let time_diff = new Date().getTime() - startTime;
+    let time_diff_sec = time_diff / 1000;
+    data["Time"] = time_diff_sec
     PostToSheets(data, setWritingData, setSuccessMessage);
   };
   // console.log(errors);
@@ -116,6 +121,7 @@ function App() {
     // console.log("Created stickies!")
     setLoadingResults(false);
     setCompleted(true);
+    setStartTime(new Date().getTime())
   }
 
   async function updateCount() {
@@ -287,6 +293,32 @@ function App() {
                 )}
               </div>
               <div className="flex">
+                <label>What is your age?</label>
+                <textarea
+                  className="small"
+                  type="text"
+                  name="Age"
+                  placeholder="Enter your age"
+                  {...register("Age", {required:"Please enter your age"})}
+                />
+                {errors.Age && (
+                  <p className="text-red-500">{errors.Age?.message}</p>
+                )}
+              </div>
+              <div className="flex">
+                <label>What is your occupation?</label>
+                <textarea
+                  className="small"
+                  type="text"
+                  name="Occupation"
+                  placeholder="Enter your Occupation"
+                  {...register("Occupation", {required:"Please enter your Occupation"})}
+                />
+                {errors.Occupation && (
+                  <p className="text-red-500">{errors.Occupation?.message}</p>
+                )}
+              </div>
+              <div className="flex">
                 <label>#1 cluster summary</label>
                 <textarea
                   type="text"
@@ -325,6 +357,7 @@ function App() {
             </div>
           </div>
           <div className="loading">
+            {successMessage && <p>{successMessage}</p>}
             {writingData ? (
               <CircularProgress />
             ) : (
@@ -334,7 +367,6 @@ function App() {
             )}
           </div>
         </form>
-        {successMessage && <p>{successMessage}</p>}
       </div>
     </div>
   );
