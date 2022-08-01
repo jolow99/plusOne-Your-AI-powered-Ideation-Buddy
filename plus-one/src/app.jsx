@@ -5,7 +5,7 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import PostToSheets from "./googleAPI";
 import { useForm } from "react-hook-form";
-import myData from "./short.json";
+import myData from "./long.json";
 
 function App() {
   const API_URL = "https://plus-one-api-d6djkekpna-as.a.run.app/predict";
@@ -253,9 +253,9 @@ function App() {
             <ArrowBackIosIcon className="navigation" onClick={() => {setCompleted(false)}}/>
             <div className="intro">
               <h2 className="light">Summarising The Results!</h2>
-              <p>
-                Here are the instructions for how you should complete this task!
-              </p>
+              <ul>
+              <li>Please input the final cluster summaries in their respective boxes below and click submit.</li>
+              </ul>
             </div>
             <div>
               <div className="flex">
