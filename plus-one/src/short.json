@@ -1,26 +1,56 @@
 {
     "clusters": [
         [
+            "Canteen gets crowded easily",
+            "no air conditioning",
+            "bird situation",
+            "the table sizes are too small",
+            "the canteen is very small",
+            "not enough tables at peak period",
+            "no power supply at most seats",
+            "when it rains the rain water go into my food",
+            "tabels are not clean at peak periods",
+            "there is not enough power points",
+            "bird eats my food",
+            "no aircon"
+        ],
+        [
+            "not many choices",
+            "there is too little halal stores",
+            "having lesser and lesser vendor",
+            "not much food left at night",
+            "no yong tau foo",
+            "many stores are empty",
+            "no mexican food",
+            "no hand sanitiser",
+            "more atas cleaning station",
             "Canteen closes early",
             "Queue too long at peak periods",
-            "Canteen gets crowded easily"
-        ],
-        [
-            "Lack of variety",
-            "Having lesser and lesser vendor",
-            "no yong tau foo"
-        ],
-        [
-            "portions are small",
+            "food choice is limited",
             "very few snacks? there used to be waffles but now no more",
-            "food poisoning",
             "lack of variety of food choices",
-            "not many choices"
+            "no chicken rice store"
+        ],
+        [
+            "the vendors are slow at peak periods",
+            "portions are small",
+            "food poisoning",
+            "queue is very long",
+            "affordable options are limited", 
+            "the food very oily",
+            "the food always the same",
+            "unequal serving size from vendors",
+            "the smoke smell from the jap store is very irritating",
+            "everyday eat the same food",
+            "the food options are not very healthy",
+            "too much oil",
+            "the food is the same all the time",
+            "lack of variation per stall"
         ]
     ],
     "labels": [
-        "The canteen gets crowded easily and closes early",
-        "There is a lack of variation among the food stalls at the hawker centre",
-        "There are not many food options available at night, and the food that is available is not very nutritious"
+        "The environment is bad. It is crowded, hot and unsanitary.",
+        "There is lack of food options. No food at night.",
+        "The vendors are incompetent, slow, unjust and serve terrible food."
     ]
 }
