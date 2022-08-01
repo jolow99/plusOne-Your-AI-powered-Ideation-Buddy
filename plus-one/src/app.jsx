@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import CircularProgress from '@mui/material/CircularProgress';
 import PostToSheets from './googleAPI';
 import { useForm } from 'react-hook-form';
-import myData from './output.json';
+import myData from './short.json';
 
 function App() {
   const API_URL = "https://plus-one-api-d6djkekpna-as.a.run.app/predict"
