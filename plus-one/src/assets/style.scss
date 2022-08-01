@@ -240,3 +240,21 @@ input[type=text] {
 #tog, #content { display: none }
 #tog:checked + #content { display: block }
 
+.navigation {
+  text-decoration: underline;
+  // set color to blue
+  color: blue;
+  // on mouse over
+  &:hover {
+    // set color to red
+    color: red;
+    // change mouse pointer
+    cursor: pointer;
+  }
+}
+
+.scroll {
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 90vh;
+}
