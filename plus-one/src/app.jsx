@@ -220,6 +220,76 @@ function App() {
           }
         </div>
     </div>
+<<<<<<< Updated upstream
+=======
+
+
+    <div id= 'form' className={`cs1 ce12 ${completed ? "" : "hidden"}`}>
+      
+      <form className = 'test' onSubmit={handleSubmit(onSubmit)}>
+        <div className='form-group'>
+
+        <label for="tog">Instructions</label>
+          <input type="checkbox" name="check" value='1' id="tog"/>
+          <div id="content">
+            <ul className='ul'>
+              <li ><b>Steps</b></li>
+              <li>1. Read the clusters' Summary labels</li>
+              <li>2. Write three points that would you like to present to the management</li>
+              <li>3. Indicate which clusters you choose  in the respective dropdown options</li>
+            </ul>
+          </div>
+          
+          {/* <label className='temp-hide'>#1 cluster summary</label> */}
+          <select className='temp-hide'>
+            <option value="1">Cluster 1 </option>
+            <option value="2">Cluster 2 </option>
+            <option value="3">Cluster 3 </option>
+            <option value="4">Cluster 4 </option>
+            <option value="5">Cluster 5 </option>
+            <option value="6">Cluster 6 </option>
+          </select >
+            <textarea type="text" className = 'Qns-1 temp-hide' name='Qns-1' placeholder="Type your cluster summary" {...register("Qns 1", {})} />
+          {/* <label className='temp-hide'>#2 cluster summary</label> */}
+          <select className='temp-hide'>
+            <option value="1">Cluster 1 </option>
+            <option value="2">Cluster 2 </option>
+            <option value="3">Cluster 3 </option>
+            <option value="4">Cluster 4 </option>
+            <option value="5">Cluster 5 </option>
+            <option value="6">Cluster 6 </option>
+          </select>
+            <textarea type="text" className = "Qns-2 temp-hide" name='Qns-2' placeholder="Type your cluster summary" {...register("Qns 2", {})} />
+          {/* <label className='temp-hide'>#3 cluster summary</label> */}
+          <select className='temp-hide'>
+            <option value="1">Cluster 1 </option>
+            <option value="2">Cluster 2 </option>
+            <option value="3">Cluster 3 </option>
+            <option value="4">Cluster 4 </option>
+            <option value="5">Cluster 5 </option>
+            <option value="6">Cluster 6 </option>
+          </select>
+            <textarea type="text" className = 'Qns-3 temp-hide'name='Qns-3' placeholder="Type your cluster summary" {...register("Qns 3", {})} />
+        
+        </div>
+       
+        <div id='end' className='temp-hide'>
+          <a ><center>Thanks for submitting :D!</center></a>
+        </div>
+        
+    
+        <input  className = 'btn' type="submit" />
+        <button type='button' id='ints' className="button button-primary">Start</button>
+      </form>
+      
+      
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="form.js" type="text/javascript"></script>
+    <script type="text/javascript">
+      console.log("hello")
+    </script>
+>>>>>>> Stashed changes
    </div>
   );
 }

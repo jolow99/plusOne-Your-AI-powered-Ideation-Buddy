@@ -9,6 +9,147 @@
   <body>
     
     <div id="root"></div>
+<<<<<<< Updated upstream
+=======
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript">
+  console.log('inside form')
+$(document).ready(function(){
+    $('form').find('#ints').on('click',function(){
+       $(this).siblings('.ul').toggleClass('hidden');
+       $(this).toggleClass('hidden');
+       $(this).parent().css({
+         'height' : '700px',
+         'transform' : 'translateY(10px)'
+       });
+         $(this).siblings('.form-group').css({
+           'top':'20px'
+         });
+         
+         $(this).siblings('.form-group').children('.temp-hide').toggleClass('temp-show');
+   
+       });
+
+    $('form').find('.btn').on('click',function(){
+       $(this).siblings('.form-group').toggleClass('hidden');
+       $(this).toggleClass('temp-hide');
+       $(this).siblings('#end').toggleClass('temp-show');
+       $(this).siblings('#end').css({
+        'transform' : 'translateY(300px)'
+        });
+       
+       
+       //create a <a> tag and append to the form-group
+      
+
+
+    });
+   
+   
+   /*-------- focus in ---------*/
+   $('.Qns-2').on('focusin',function(){
+     $(this).siblings('.Qns-1').css({
+       'z-index'   :'1',
+       'background':'rgba(0,0,0,0.1)',
+        'color'     :'black'
+     });
+     $(this).siblings('.Qns-3').css({
+        'z-index'   :'1',
+        'background':'rgba(0,0,0,0.1)',
+        'color'     :'black'
+      });
+      $(this).css({
+       'z-index' : '2',
+       'background' : '#fff',
+       'color'     :'black',
+       
+       
+       });
+   });
+   
+   
+    $('.Qns-1').on('focusin',function(){
+     $(this).siblings('.Qns-2').css({
+       'z-index'   :'1',
+       'background':'rgba(0,0,0,0.1)',
+       'color'     :'black'
+     });
+     $(this).siblings('.Qns-3').css({
+        'z-index'   :'1',
+        'background':'rgba(0,0,0,0.1)',
+        'color'     :'black'
+      });
+     $(this).css({
+       'z-index' : '2',
+       'background' : '#fff',
+       'color'     :'black'
+      });
+   });
+
+   $('.Qns-3').on('focusin',function(){
+    $(this).siblings('.Qns-2').css({
+      'z-index'   :'1',
+      'background':'rgba(0,0,0,0.1)',
+    });
+    $(this).siblings('.Qns-1').css({
+       'z-index'   :'1',
+       'background':'rgba(0,0,0,0.1)',
+     });
+    $(this).css({
+      'z-index' : '2',
+      'background' : '#fff'
+     });
+  });
+   
+   /*----------- focus out ---------*/
+   $('.Qns-1').on('focusout',function(){
+     $(this).siblings('.Qns-2').css({
+       'z-index'   :'1',
+       'background':'rgba(0,0,0,.1)'
+     });
+     $(this).siblings('.Qns-3').css({
+        'z-index'   :'1',
+        'background':'rgba(0,0,0,.1)'
+      });
+     $(this).css({
+       'z-index' : '2',
+       'background' : '#fff'
+     });
+   });
+   
+   
+   $('.Qns-2').on('focusout',function(){
+    $(this).siblings('.Qns-1').css({
+      'z-index'   :'1',
+      'background':'rgba(0,0,0,.1)'
+    });
+    $(this).siblings('.Qns-3').css({
+       'z-index'   :'1',
+       'background':'rgba(0,0,0,.1)'
+     });
+    $(this).css({
+      'z-index' : '2',
+      'background' : '#fff'
+    });
+  });
+
+  $('.Qns-3').on('focusout',function(){
+    $(this).siblings('.Qns-2').css({
+      'z-index'   :'1',
+      'background':'rgba(0,0,0,.1)'
+    });
+    $(this).siblings('.Qns-1').css({
+       'z-index'   :'1',
+       'background':'rgba(0,0,0,.1)'
+     });
+    $(this).css({
+      'z-index' : '2',
+      'background' : '#fff'
+    });
+  });
+ })
+    </script>
+>>>>>>> Stashed changes
     
     <script type="module" src="/src/app.jsx"></script>
   </body>
