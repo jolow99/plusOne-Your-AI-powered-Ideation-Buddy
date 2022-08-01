@@ -186,8 +186,6 @@ function App() {
             <h3>1. Select Post-Its</h3>
             <ul>
               <li>Select post-its which you want to categorise by highlighting them</li>
-              <li>Drag-select or ctrl+click on the post-it to select it</li>
-              <li>Ctrl+click on selected post-its to de-select it</li>
             </ul>
           </div>
 
