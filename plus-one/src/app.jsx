@@ -1,8 +1,8 @@
 import * as React from "react";
 import ReactDOM from "react-dom";
 import CircularProgress from "@mui/material/CircularProgress";
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import PostToSheets from "./googleAPI";
 import { useForm } from "react-hook-form";
 import myData from "./long.json";
@@ -22,7 +22,7 @@ function App() {
   } = useForm();
   const onSubmit = (data) => {
     console.log(data);
-    setSuccessMessage("")
+    setSuccessMessage("");
     setWritingData(true);
     PostToSheets(data, setWritingData, setSuccessMessage);
   };
@@ -243,18 +243,33 @@ function App() {
           )}
         </div>
         <div className="align-right">
-        <a className="navigation" onClick={() => {setCompleted(true)}}>Go to form</a>
+          <a
+            className="navigation"
+            onClick={() => {
+              setCompleted(true);
+            }}
+          >
+            Go to form
+          </a>
         </div>
       </div>
 
       <div className={`cs1 ce12 ${completed ? "" : "hidden"}`}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div>
-            <ArrowBackIosIcon className="navigation" onClick={() => {setCompleted(false)}}/>
+            <ArrowBackIosIcon
+              className="navigation"
+              onClick={() => {
+                setCompleted(false);
+              }}
+            />
             <div className="intro">
               <h2 className="light">Summarising The Results!</h2>
               <ul>
-              <li>Please input the final cluster summaries in their respective boxes below and click submit.</li>
+                <li>
+                  Please input the final cluster summaries in their respective
+                  boxes below and click submit.
+                </li>
               </ul>
             </div>
             <div>
@@ -298,13 +313,13 @@ function App() {
             </div>
           </div>
           <div className="loading">
-          {writingData ? (
-            <CircularProgress />
-          ) : (
-            <button className="button button-primary" type="submit">
-              Submit
-            </button>
-          )}
+            {writingData ? (
+              <CircularProgress />
+            ) : (
+              <button className="button button-primary" type="submit">
+                Submit
+              </button>
+            )}
           </div>
         </form>
         {successMessage && <p>{successMessage}</p>}
