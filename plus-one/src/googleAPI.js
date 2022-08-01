@@ -4,7 +4,7 @@ import Sheet2API from 'sheet2api-js';
 //https://sheet2api.com/v1/97Jq2YRtTeqd/one-plus
 
 
-export default function PostToSheets(data, setWritingData){
+export default function PostToSheets(data, setWritingData, setSuccessMessage){
     const url = 'https://sheet2api.com/v1/97Jq2YRtTeqd/one-plus';
     
     const options = {};
@@ -13,9 +13,11 @@ export default function PostToSheets(data, setWritingData){
         console.log("RESULT")
         console.log(result);
         setWritingData(false)
+        setSuccessMessage("Form Successfully Submitted!")
         }, function(error){
         console.log("ERROR")
         console.log(error);
+        setSuccessMessage("Form Submission Failed!")
     });
 }
 
