@@ -280,35 +280,47 @@ function App() {
                   type="text"
                   name="Name"
                   placeholder="Enter your name"
-                  {...register("Name", {})}
+                  {...register("Name", {required:"Please enter your name"})}
                 />
+                {errors.Name && (
+                  <p className="text-red-500">{errors.Name?.message}</p>
+                )}
               </div>
               <div className="flex">
                 <label>#1 cluster summary</label>
                 <textarea
                   type="text"
-                  name="Qns-1"
+                  name="Qns_1"
                   placeholder="Type your cluster summary"
-                  {...register("Qns 1", {})}
+                  {...register("Qns_1", { required: "Cluster 1 is required" })}
                 />
+                {errors.Qns_1 && (
+                  <p className="text-red-500">{errors.Qns_1?.message}</p>
+                )}
               </div>
               <div className="flex">
                 <label>#2 cluster summary</label>
                 <textarea
                   type="text"
-                  name="Qns-2"
+                  name="Qns_2"
                   placeholder="Type your cluster summary"
-                  {...register("Qns 2", {})}
+                  {...register("Qns_2", { required: "Cluster 2 is required" })}
                 />
+                {errors.Qns_2 && (
+                  <p className="text-red-500">{errors.Qns_2?.message}</p>
+                )}
               </div>
               <div className="flex">
                 <label>#3 cluster summary</label>
                 <textarea
                   type="text"
-                  name="Qns-3"
+                  name="Qns_3"
                   placeholder="Type your cluster summary"
-                  {...register("Qns 3", {})}
+                  {...register("Qns_3", { required: "Cluster 3 is required" })}
                 />
+                {errors.Qns_3 && (
+                  <p className="text-red-500">{errors.Qns_3?.message}</p>
+                )}
               </div>
             </div>
           </div>
