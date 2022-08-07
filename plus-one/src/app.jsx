@@ -34,7 +34,7 @@ function App() {
       sticky_x = 0
       sticky_y = 0
       frame = await miro.board.createFrame({
-        title: "Cluster" + i,
+        title: "Cluster" + i + 1,
         width: 8000,
         height: 4500,
       })
@@ -175,7 +175,7 @@ function App() {
 
   return (
     <div className="grid wrapper">
-      <div className={`cs1 ce12 ${completed ? "hidden" : "scroll"}`}>
+      <div className={`cs1 ce12 scroll`}>
         <div className="intro">
           <h2 className="light">
             Welcome to plusOne, your AI-powered categorisation buddy!
