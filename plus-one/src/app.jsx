@@ -34,7 +34,7 @@ function App() {
       sticky_x = 0
       sticky_y = 0
       frame = await miro.board.createFrame({
-        title: "Cluster" + i + 1,
+        title: "Cluster" + (i + 1),
         width: 8000,
         height: 4500,
       })
